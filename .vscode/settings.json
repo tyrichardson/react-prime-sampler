@@ -1,0 +1,14 @@
+{
+  "sqltools.connections": [
+    {
+      "askForPassword": false,
+      "connectionTimeout": 3,
+      "database": "react_student_list",
+      "dialect": "PostgreSQL",
+      "name": "pg_react_student_list",
+      "port": 5432,
+      "server": "localhost",
+      "username": "MacUser"
+    }
+  ]
+}
