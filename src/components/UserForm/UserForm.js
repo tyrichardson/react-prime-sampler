@@ -1,29 +1,29 @@
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import 'typeface-roboto';
+import Grid from '@material-ui/core/Grid';
 
 class UserForm extends Component
 {
   render()
   {
     return (
-      <div id="formDiv">
-        <p>user form</p>
+      <Grid item xs={12}>
+      <div id="formDiv" style={{ backgroundColor: "lightgreen", padding: 1 + "rem" }}>
         <form>
+          <p>Current value: {this.props.user.name}</p>
           <TextField value={this.props.userInputs.name}
             placeholder="name"
             onChange={this.props.handleChangeFor('name')} />
-          <p>Default/current value: {this.props.user.name}</p>
-          <p>You typed: {this.props.userInputs.name}</p>
+          <p>Current value: {this.props.user.city}</p>
           <TextField value={this.props.userInputs.city}
             placeholder="city"
             onChange={this.props.handleChangeFor('city')} />
-          <p>Oh--from {this.props.userInputs.city}, huh?</p>
-          <p>Default/current value: {this.props.user.city}</p>
+          <p>You typed: {this.props.userInputs.name} |  {this.props.userInputs.city}</p>
           <Button color="secondary" size="small" variant="contained" onClick={this.props.handleSubmit}>Submit</Button>
         </form>
       </div>
+      </Grid>
     )
   }
 }

@@ -1,28 +1,25 @@
 import React, { Component } from 'react';
-import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 
 class StudentList extends Component
 {
-  constructor(props)
-  {
-    super(props);
-  }
-
   render()
   {
     return (
-      <div id="StudentList">
-        <Grid container>
-          <Grid item xs={12}>
-            <p>Github User Name</p>
-          </Grid>
-        </Grid>
-        <Grid container>
-          {this.props.studentList.map(student => <Grid item xs={12} key={student.id}>{student.github_name}</Grid>)}
-        </Grid>
+      <div id="StudentList"
+        style={{ backgroundColor: "lightblue", padding: 1 + "rem", flexBasis: 30 + '%' }}>
+
+        {this.props.studentList.map(student => <table style={{ width: 100 + '%', }}><tbody><tr key={student.id}>
+          <td><HighlightOffIcon fontSize="small" onClick={() => { this.props.deleteStudent(student.id, student.github_name) }}/>
+          </td>
+          <td style={{width: 12 + 'rem', textAlign: "left" }}>{student.github_name}
+          </td>
+          <td style={{width: 7 + 'rem'}}><Button color="primary" size="small" onClick={() => { this.props.onClickGitHubPhoto(student.github_name) }}>github photo</Button>
+          </td>
+        </tr></tbody></table>)}
 
       </div>
-
     )
   }
 

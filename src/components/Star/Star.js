@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
+import StarTwoToneIcon from '@material-ui/icons/StarTwoTone';
 
 class Star extends Component
 {
@@ -60,37 +61,47 @@ class Star extends Component
   render()
   {
     return (
-      <div id="starDiv">
-        <p>star section -- example using an array and map() and the spread operator</p>
-        <p>Splat of this.state.starList array: </p>
-        <pre>{JSON.stringify(this.state.starList)}</pre>
+      <Grid item xs={12}>
+        <div id="starDiv" style={{ backgroundColor: "cornflowerblue", padding: 1 + "rem" }}>
+          {/* <p>star section -- example using an array and map() and the spread operator</p>
+          <p>Splat of this.state.starList array: </p>
+          <pre>{JSON.stringify(this.state.starList)}</pre > */}
 
-        <Grid container
-          spacing={1}
-          justify="center"
-        >
-          <Grid item xs={2}></Grid>
-          <Grid item xs={4}>
-             <TextField name="newStarName"
+          <Grid item xs={12}>
+            <StarTwoToneIcon></StarTwoToneIcon>
+            <StarTwoToneIcon></StarTwoToneIcon>
+            <StarTwoToneIcon></StarTwoToneIcon>
+            <TextField name="newStarName"
               placeholder="new star's name"
               value={this.state.newStarInputs.name}
-                  onChange={this.handleChangeForStar('name')} />
+              onChange={this.handleChangeForStar('name')} />
+            <StarTwoToneIcon></StarTwoToneIcon>
+            <StarTwoToneIcon></StarTwoToneIcon>
+            <StarTwoToneIcon></StarTwoToneIcon>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={12}>
+            <StarTwoToneIcon></StarTwoToneIcon>
+            <StarTwoToneIcon></StarTwoToneIcon>
+            <StarTwoToneIcon></StarTwoToneIcon>
             <TextField name="NewStarDiameter"
               placeholder="diameter of new star"
               value={this.state.newStarInputs.diameter}
-                  onChange={this.handleChangeForStar('diameter')} />
+              onChange={this.handleChangeForStar('diameter')} />
+            <StarTwoToneIcon></StarTwoToneIcon>
+            <StarTwoToneIcon></StarTwoToneIcon>
+            <StarTwoToneIcon></StarTwoToneIcon>
           </Grid>
-          <Grid item xs={2}></Grid>
+          <Grid item xs={12}>
+          <Button color="primary"
+            size="small" variant="contained" onClick={this.handleNewStar} style={{ margin: 0.5 + "rem" }}>Add New Star
+          </Button>
           </Grid>
-        <br /> <br />
-        <Button color="secondary" size="small" variant="contained" onClick={this.handleNewStar}>Add New Star</Button>
-        <ul>
-          {this.state.starList.map(star => <li key={star.name}> The star {star.name} has a diameter of {star.diameter} million miles.
-          </li>)}
-        </ul>
-      </div>
+          <ul>
+            {this.state.starList.map(star => <li key={star.name} style={{color: "ivory"}}> The star {star.name} has a diameter of {star.diameter} million miles.
+            </li>)}
+          </ul>
+        </div>
+      </Grid>
     )
   }
 }

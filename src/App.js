@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { ThemeProvider } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 import './App.css';
 
@@ -10,11 +13,12 @@ import UserForm from './components/UserForm/UserForm';
 import Star from './components/Star/Star';
 import theme from './components/ThemeProvider/ThemeProvider';
 import StudentForm from './components/StudentForm/StudentForm.js';
-import StudentList from './components/StudentList/StudentList.js';
 
-class App extends Component {
-  constructor(props) {
-  super(props);
+class App extends Component
+{
+  constructor(props)
+  {
+    super(props);
     this.state = {
       user: {
         name: 'Ty',
@@ -24,29 +28,12 @@ class App extends Component {
         name: '',
         city: ''
       },
-      studentList: []
-    };
-  }
-
-  addStudent = (newStudent) =>
-  {
-    console.log('App.js addStudent ', newStudent);
-    axios.post('/students', newStudent)
-      .then(function (response)
-      {
-        console.log('post response App.js ', response);
-      })
-      .catch(function (error)
-      {
-        console.log(error);
-      })
-    this.getStudents();
-  }
-
-  componentDidMount()
-  {
-    this.getStudents();
-  }
+      studentList: [],
+      open: false,
+      githubPhoto: '',
+      github_name: '',
+    }
+  };
 
   getStudents = () =>
   {
@@ -59,12 +46,79 @@ class App extends Component {
             studentList: response.data
           }
         );
-        console.log(`studentList ${this.studentList}`);
       })
       .catch(function (error)
       {
         console.log(error);
       });
+  }
+
+  componentDidMount()
+  {
+    this.getStudents();
+  }
+
+  addStudent = (newStudent) =>
+  {
+    console.log('App.js addStudent ', newStudent);
+    axios.post('/students', newStudent)
+      .then((response) =>
+      {
+        console.log('post response App.js ', response);
+        this.getStudents();
+      })
+      .catch((error) =>
+      {
+        console.log(error);
+      })
+  }
+
+  onClickGitHubPhoto = (github_name) =>
+  {
+    console.log('onClickGitHubPhoto ', github_name);
+
+    axios.get('/students/photo', {
+      params: {
+        name: github_name
+      }
+    })
+      .then((response) =>
+      {
+        console.log('get githubPhoto response App.js ', response.data);
+        this.setState({
+          githubPhoto: response.data[0].avatar_url,
+          github_name: github_name
+        })
+      })
+      .catch(function (error)
+      {
+        console.log(error);
+      })
+  }
+
+  deleteStudent = (studentId, githubName) =>
+  {
+    console.log('deleteStudent ', studentId);
+    axios.delete('/students', {
+      data: {
+      id: studentId
+      }
+    })
+      .then((response) =>
+      {
+        console.log('delete response from App.js ', response);
+        if (githubName === this.state.github_name) {
+          this.setState({
+            githubPhoto: '',
+            github_name: ''
+          })
+        }
+        this.getStudents();
+      })
+      .catch ((error) =>
+      {
+        console.log(error);
+      })
   }
 
   handleChangeFor = propertyName => e =>
@@ -91,27 +145,39 @@ class App extends Component {
     })
   }
 
+  handleMom = () => this.setState({ open: true });
+
+  handleMomClose = () => this.setState({ open: false });
+
   render()
   {
     return (
       <ThemeProvider theme={theme}>
-        <div className="App">
 
-          <Header />
+        <main className="App">
 
-          <pre>{JSON.stringify(this.state.studentList)}</pre>
+          <Grid container spacing={0} direction="row" justify="flex-start" alignItems="flex-start">
 
-          <StudentForm addStudent={this.addStudent} />
+            <Header />
 
-          <StudentList studentList={this.state.studentList} />
+            {/* <pre>{JSON.stringify(this.state.studentList)}</pre> */}
 
-          <SearchButton />
+            <StudentForm addStudent={this.addStudent} studentList={this.state.studentList} onClickGitHubPhoto={this.onClickGitHubPhoto} githubPhoto={this.state.githubPhoto} deleteStudent={this.deleteStudent} />
 
-          <UserForm user={this.state.user} userInputs={this.state.userInputs} handleSubmit={this.handleSubmit} handleChangeFor={this.handleChangeFor} />
+            <SearchButton handleMom={this.handleMom} />
 
-          <Star />
+            <UserForm user={this.state.user} userInputs={this.state.userInputs} handleSubmit={this.handleSubmit} handleChangeFor={this.handleChangeFor} />
 
-        </div>
+            <Star />
+
+          </Grid>
+
+          <Dialog onClose={this.handleMomClose} open={this.state.open}>
+            <DialogTitle>...for a pithy Dialog</DialogTitle>
+          </Dialog>
+
+        </main>
+
       </ThemeProvider>
     );
   }
