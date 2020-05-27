@@ -29,7 +29,8 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
-    "@material-ui/icons": "^4.9.1"
+    "@material-ui/icons": "^4.9.1",
+    "typescript": "^3.9.3"
   },
   "browserslist": [
     ">0.2%",
