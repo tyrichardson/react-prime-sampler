@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
-import CallIcon from '@material-ui/icons/Call';
+import { Call } from '@material-ui/icons';
 import Grid from '@material-ui/core/Grid';
 
 
@@ -14,7 +14,7 @@ class SearchButton extends Component
         <div style={{ backgroundColor: "pink" }}>
 
           <Button color="primary" onClick={this.props.handleMom}>
-            <CallIcon />
+            <Call />
               Phone home
           </Button>
 
