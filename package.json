@@ -22,7 +22,7 @@
   },
   "scripts": {
     "dev": "react-scripts start",
-    "start": "serve -s build",
+    "start": "react-scripts build && node server/server.js",
     "build": "react-scripts build",
     "heroku-postbuild": "npm run build"
   },
